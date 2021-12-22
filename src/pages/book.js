@@ -5,6 +5,10 @@ import BookList from '../components/BookList'
 
 export default class BookPage extends Component {
     
+      
+    
+      
+    
     render() {
         return(
               <div className="list-books">
@@ -12,7 +16,8 @@ export default class BookPage extends Component {
                       <h1>MyReads</h1>
                       {/* {JSON.stringify(this.state.books)} */}
                       <BookList 
-                  books={this.props.books}/>
+                  books={this.props.books} 
+                  handleChangeShelf= {this.props.handleChangeShelf}/>
                   </div>
               </div>
               

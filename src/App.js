@@ -8,9 +8,12 @@ import { Route } from 'react-router-dom';
 import {Link} from 'react-router-dom'
 
 class BooksApp extends React.Component {
-  state = {
-    books: []
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      books: []
+    };
+  }
 
   componentDidMount() {
     BooksAPI.getAll().then(
@@ -18,11 +21,24 @@ class BooksApp extends React.Component {
     );
   }
 
+  handleChangeShelf = (bookid, newShelf) => {
+    const newBooks = this.state.books.map((book) => {
+      if (book.id === bookid) {
+        book.shelf = newShelf;
+      }
+      return book;
+    });
+    this.setState({
+      books: newBooks
+    });
+  };
+
+  
   render() {
     return (
       <div className="app">
         <Routes>
-           <Route path='/' element={<Bookpage books={this.state.books}/>}/>
+           <Route path='/' element={<Bookpage books={this.state.books} handleChangeShelf={this.handleChangeShelf}/>}/>
            <Route path='/search' element={<SearchBooks books={this.state.books}/>}/>
         </Routes>
         <div className="open-search">

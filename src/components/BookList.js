@@ -29,7 +29,8 @@ export default class BookList extends Component {
                                     .map((book)=>
                                     <BookItem 
                                     book={book} 
-                                    key={book.id} />)
+                                    key={book.id} 
+                                    handleChangeShelf={this.props.handleChangeShelf}/>)
                                     }
                                 </ol>
                             </div>

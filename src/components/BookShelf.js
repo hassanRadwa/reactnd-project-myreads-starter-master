@@ -1,5 +1,5 @@
 const BookShelf = {
-    move: 'Move to...',
+    // move: 'Move to...',
     currentlyReading: 'Currently Reading',
     wantToRead: 'Want to Read',
     read: 'Read',

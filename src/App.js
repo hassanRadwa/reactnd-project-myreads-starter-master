@@ -5,7 +5,7 @@ import Bookpage from './pages/book';
 import SearchBooks from './pages/searchBooks';
 import { Routes } from 'react-router-dom';
 import { Route } from 'react-router-dom';
-import {Link} from 'react-router-dom'
+
 
 class BooksApp extends React.Component {
   constructor(props) {
@@ -41,9 +41,7 @@ class BooksApp extends React.Component {
            <Route path='/' element={<Bookpage books={this.state.books} handleChangeShelf={this.handleChangeShelf}/>}/>
            <Route path='/search' element={<SearchBooks books={this.state.books}/>}/>
         </Routes>
-        <div className="open-search">
-          <Link to='/search'><button></button></Link>
-        </div>
+        
       </div>
     )
   }

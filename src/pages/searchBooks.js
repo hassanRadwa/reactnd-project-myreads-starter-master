@@ -16,6 +16,7 @@ export default class SearchBooks extends Component {
     if(e.target.value.trim()!=='')
         BooksAPI.search(e.target.value).then(
             filteredBooks => {//alert(Object.keys(filteredBooks)[0]);
+                //JSON.stringify(filteredBooks);
                 Object.keys(filteredBooks)[0]==='error'?this.setState({books: [] }):this.setState({books: filteredBooks })}
             );
     else
@@ -43,7 +44,7 @@ export default class SearchBooks extends Component {
               </div>
             </div>
             <div className="search-books-results">
-            {JSON.stringify(this.state.books)}
+            {/* {JSON.stringify(this.state.books)} */}
               <ol className="books-grid">
               {typeof this.state.books !== 'undefined' && this.state.text.trim()!=='' && this.state.books?
               this.state.books.map((book)=>

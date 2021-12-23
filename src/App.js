@@ -17,11 +17,13 @@ class BooksApp extends React.Component {
 
   componentDidMount() {
     BooksAPI.getAll().then(
-        (books) => this.setState({books})
+        (books) => {this.setState({books});console.log(books);}
     );
+    
   }
 
   handleChangeShelf = (bookid, newShelf) => {
+    BooksAPI.update(bookid,newShelf).then(response =>{
     const newBooks = this.state.books.map((book) => {
       if (book.id === bookid) {
         book.shelf = newShelf;
@@ -30,7 +32,7 @@ class BooksApp extends React.Component {
     });
     this.setState({
       books: newBooks
-    });
+    })});
   };
 
   

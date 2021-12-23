@@ -3,6 +3,7 @@ import '../App.css'
 import {Link} from 'react-router-dom'
 import * as BooksAPI from '../BooksAPI'
 import BookItem from '../components/BookItem';
+import BookList from '../components/BookList'
 
 export default class SearchBooks extends Component {
     state = {
@@ -11,17 +12,33 @@ export default class SearchBooks extends Component {
       };
     handleTextChange = (e) => {
         this.setState({
-            text: e.target.value.trim()
-    });
-    if(e.target.value.trim()!=='')
-        BooksAPI.search(e.target.value).then(
-            filteredBooks => {//alert(Object.keys(filteredBooks)[0]);
-                //JSON.stringify(filteredBooks);
-                Object.keys(filteredBooks)[0]==='error'?this.setState({books: [] }):this.setState({books: filteredBooks })}
-            );
-    else
-    this.setState({books: [] ,text: ''})
+            text: e.target.value.trim()});
+        if(e.target.value.trim()!=='')
+            BooksAPI.search(e.target.value).then(
+                filteredBooks => {//alert(Object.keys(filteredBooks)[0]);
+                    //alert(filteredBooks);
+                    //JSON.stringify(filteredBooks);
+                    //console.log(filteredBooks);
+                    Object.keys(filteredBooks)[0]==='error'?this.setState({books: [] }):this.setState({books: filteredBooks })}
+                );
+        else
+        this.setState({books: [] ,text: ''})
+
+        //alert(this.state.books);
     };
+
+    handleChangeShelf = (bookid, newShelf) => {
+        BooksAPI.update(bookid,newShelf).then(response =>{
+        const newBooks = this.state.books.map((book) => {
+          if (book.id === bookid) {
+            book.shelf = newShelf;
+          }
+          return book;
+        });
+        this.setState({
+          books: newBooks
+        })});
+      };
     render() {
        // {JSON.stringify(this.state.books)}
         return(
@@ -45,14 +62,20 @@ export default class SearchBooks extends Component {
             </div>
             <div className="search-books-results">
             {/* {JSON.stringify(this.state.books)} */}
-              <ol className="books-grid">
+              <ol className="books-grid" >
               {typeof this.state.books !== 'undefined' && this.state.text.trim()!=='' && this.state.books?
               this.state.books.map((book)=>
                                     <BookItem 
                                     book={book} 
-                                    key={book.id} />):<div></div>
+                                    key={book.id}
+                                    handleChangeShelf={this.handleChangeShelf} />):<div></div>
                                     }
               </ol>
+              {/* {typeof this.state.books !== 'undefined' && this.state.text.trim()!=='' && this.state.books?
+              <BookList 
+              books={this.state.books} 
+              handleChangeShelf= {this.handleChangeShelf}/>
+              :<div>No books found</div>} */}
             </div>
           </div>
         )

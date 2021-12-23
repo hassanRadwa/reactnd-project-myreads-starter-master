@@ -6,7 +6,7 @@ export default class SelectComponent extends Component {
     render(){
         const { handleChange, shelfValue, options } = this.props;
         return(
-            <select value={shelfValue} onChange={handleChange}>
+            <select value={shelfValue} defaultValue={shelfValue} onChange={handleChange} >
               {/* <option value="move" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>

@@ -8,37 +8,19 @@ import BookList from '../components/BookList'
 export default class SearchBooks extends Component {
     state = {
         text: '',
-        books: []
+
       };
-    handleTextChange = (e) => {
-        this.setState({
-            text: e.target.value.trim()});
+    
+      handleTextChange = (e) => {
         if(e.target.value.trim()!=='')
-            BooksAPI.search(e.target.value).then(
-                filteredBooks => {//alert(Object.keys(filteredBooks)[0]);
-                    //alert(filteredBooks);
-                    //JSON.stringify(filteredBooks);
-                    //console.log(filteredBooks);
-                    Object.keys(filteredBooks)[0]==='error'?this.setState({books: [] }):this.setState({books: filteredBooks })}
-                );
+        this.setState({text: e.target.value.trim()})
         else
-        this.setState({books: [] ,text: ''})
-
-        //alert(this.state.books);
-    };
-
-    handleChangeShelf = (bookid, newShelf) => {
-        BooksAPI.update(bookid,newShelf).then(response =>{
-        const newBooks = this.state.books.map((book) => {
-          if (book.id === bookid) {
-            book.shelf = newShelf;
-          }
-          return book;
-        });
-        this.setState({
-          books: newBooks
-        })});
+        this.setState({text: ''})
+        this.props.handleTextChange(e);
+        console.log('inside search txt change handler');
+        console.log(this.props.books);
       };
+    
     render() {
        // {JSON.stringify(this.state.books)}
         return(
@@ -63,12 +45,12 @@ export default class SearchBooks extends Component {
             <div className="search-books-results">
             {/* {JSON.stringify(this.state.books)} */}
               <ol className="books-grid" >
-              {typeof this.state.books !== 'undefined' && this.state.text.trim()!=='' && this.state.books?
-              this.state.books.map((book)=>
+              {typeof this.props.books !== 'undefined' && this.state.text.trim()!=='' && this.props.books?
+              this.props.books.map((book)=>
                                     <BookItem 
                                     book={book} 
                                     key={book.id}
-                                    handleChangeShelf={this.handleChangeShelf} />):<div></div>
+                                    handleChangeShelf={this.props.handleChangeShelf} />):<div></div>
                                     }
               </ol>
               {/* {typeof this.state.books !== 'undefined' && this.state.text.trim()!=='' && this.state.books?

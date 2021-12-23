@@ -5,37 +5,29 @@ import BookShelf from '../components/BookShelf';
 import * as BooksAPI from '../BooksAPI'
 
 export default class BookItem extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          shelf: ''
-        };
-      }
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //       shelf: ''
+    //     };
+    //   }
     onChangeShelf = (e) => {
-        const { id } = this.props.book;
+        //const { id } = this.props.book;
         // alert(e.target.value);
         // alert(id);
-        this.props.handleChangeShelf(id, e.target.value);
+        this.props.handleChangeShelf(this.props.book, e.target.value);
+        //this.setState({shelf: e.target.value});
+        //console.log(e.target.value);
         
       };
-      getBookbyId = (bookid) => {
-        
-        BooksAPI.get(bookid).then(
-            filteredBook => {//alert(Object.keys(filteredBooks)[0]);
-                //alert(filteredBook);
-                //JSON.stringify(filteredBook);
-                //console.log(filteredBook);
-                this.setState({shelf: filteredBook.shelf});
-                }
-            );
-        
-
-        //alert(this.state.books);
-    };
+      
   render() {
     const { id,title, authors,shelf, imageLinks } = this.props.book;
-    if(!shelf) 
-        this.getBookbyId(id);
+    //alert(shelf);
+    // if(!shelf) {
+    //     this.getBookbyId(id);
+        
+    // }
     
     return (
         
@@ -58,7 +50,12 @@ export default class BookItem extends Component {
                                 }}>{typeof imageLinks === 'undefined'?'No image available':''}
                     </div>
                     <div className="book-shelf-changer">
-                        {!shelf?
+                    <SelectComponent 
+                        book={id} 
+                        handleChange= {this.onChangeShelf}
+                        shelfValue={shelf}
+                        options={Object.entries(BookShelf)}/>
+                        {/* {!shelf?
                         <SelectComponent 
                         book={this.props.book} 
                         handleChange= {this.onChangeShelf}
@@ -74,7 +71,7 @@ export default class BookItem extends Component {
                         book={this.props.book} 
                         handleChange= {this.onChangeShelf}
                         shelfValue={this.state.shelf}
-                        options={Object.entries(BookShelf)}/>
+                        options={Object.entries(BookShelf)}/> */}
                     </div>
           </div>
           <div className="book-title">{title}</div>

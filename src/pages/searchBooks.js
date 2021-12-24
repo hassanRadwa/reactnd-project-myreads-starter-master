@@ -10,6 +10,9 @@ export default class SearchBooks extends Component {
         text: '',
 
       };
+      handleChangeShelf = (book,newshelf) => {
+          this.props.handleChangeShelf(book,newshelf)
+      };
     
       handleTextChange = (e) => {
         if(e.target.value.trim()!=='')
@@ -50,7 +53,7 @@ export default class SearchBooks extends Component {
                                     <BookItem 
                                     book={book} 
                                     key={book.id}
-                                    handleChangeShelf={this.props.handleChangeShelf} />):<div></div>
+                                    handleChangeShelf={this.handleChangeShelf} />):<div></div>
                                     }
               </ol>
               {/* {typeof this.state.books !== 'undefined' && this.state.text.trim()!=='' && this.state.books?

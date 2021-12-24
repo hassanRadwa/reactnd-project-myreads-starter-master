@@ -3,10 +3,13 @@ import '../App.css';
 
 
 export default class SelectComponent extends Component {
+    changingShelf=(e)=>{
+        this.props.handleChange(e.target.value);
+    };
     render(){
         const { handleChange, shelfValue, options } = this.props;
         return(
-            <select value={shelfValue} defaultValue={shelfValue} onChange={handleChange} >
+            <select value={shelfValue}  onChange={this.changingShelf} >
               {/* <option value="move" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>

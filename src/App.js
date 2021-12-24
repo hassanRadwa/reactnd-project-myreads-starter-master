@@ -21,27 +21,32 @@ class BooksApp extends React.Component {
         (books) => {this.setState({books});console.log(books);}
     );
     
+  
   }
+
+  searching = (searchtxt)=>{
+    BooksAPI.search(searchtxt).then(
+      filteredBooks => {alert(Object.keys(filteredBooks)[0]);
+          //console.log(filteredBooks);
+          //JSON.stringify(filteredBooks);
+          
+          Object.keys(filteredBooks)[0]==='error'?
+          this.setState({searchBooks: [] }):
+          this.setState({searchBooks: filteredBooks });
+          //
+          console.log('inside not error')
+          console.log(this.state.books);
+          this.state.searchBooks.map(sbook=>{BooksAPI.get(sbook.id).then(b=>{sbook.shelf=b.shelf});return sbook;});
+          
+          }
+      );
+  };
 
   handleTextChange = (e) => {
     console.log('search text');
     console.log(e.target.value.trim());
     if(e.target.value.trim()!=='')
-        BooksAPI.search(e.target.value).then(
-            filteredBooks => {alert(Object.keys(filteredBooks)[0]);
-                //console.log(filteredBooks);
-                //JSON.stringify(filteredBooks);
-                
-                Object.keys(filteredBooks)[0]==='error'?
-                this.setState({searchBooks: [] }):
-                this.setState({searchBooks: filteredBooks });
-                //
-                console.log('inside not error')
-                console.log(this.state.books);
-                this.state.searchBooks.map(sbook=>{BooksAPI.get(sbook.id).then(b=>{sbook.shelf=b.shelf});return sbook;});
-                
-                }
-            );
+        this.searching(e.target.value);
     else
     this.setState({searchBooks: []})
 

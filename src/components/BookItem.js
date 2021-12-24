@@ -11,11 +11,11 @@ export default class BookItem extends Component {
     //       shelf: ''
     //     };
     //   }
-    onChangeShelf = (e) => {
+    onChangeShelf = (newshelf) => {
         //const { id } = this.props.book;
         // alert(e.target.value);
         // alert(id);
-        this.props.handleChangeShelf(this.props.book, e.target.value);
+        this.props.handleChangeShelf(this.props.book, newshelf);
         //this.setState({shelf: e.target.value});
         //console.log(e.target.value);
         

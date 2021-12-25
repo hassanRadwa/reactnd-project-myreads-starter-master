@@ -23,6 +23,7 @@ export default class BookItem extends Component {
       
   render() {
     const { id,title, authors,shelf, imageLinks } = this.props.book;
+    console.log('BookItem:render:props.book',this.props.book);
     //alert(shelf);
     // if(!shelf) {
     //     this.getBookbyId(id);
@@ -31,7 +32,7 @@ export default class BookItem extends Component {
     
     return (
         
-        <li>
+        <li key={id}>
             <div className="book">
                 {/* {alert(shelf)} */}
                 <div className="book-top">

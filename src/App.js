@@ -20,14 +20,13 @@ class BooksApp extends React.Component {
   componentDidMount() {
     BooksAPI.getAll().then(
         (books) => {
-          this.setState({books});//console.log(books);
+          this.setState({books});
       }
     );
     
   }
   getBookshelfBybookid=(bookid) => {
     BooksAPI.get(bookid).then((b)=>{
-      console.log('app:getBookshelfBybookid:b.shelf',JSON.stringify(b.shelf));
       return JSON.stringify(b.shelf);
     })
   };
@@ -35,26 +34,11 @@ class BooksApp extends React.Component {
   searching = (searchtxt)=>{
     if(searchtxt!=='')
     {
-    console.log('app:searching:searchtxt',searchtxt);
     BooksAPI.search(searchtxt).then(
-      filteredBooks => {//alert(Object.values(filteredBooks));
-          //console.log('app:searching:filteredBooks.error',filteredBooks.error);
-          //JSON.stringify(filteredBooks);
-          
-          
-          
-            //this.setState({searchBooks: filteredBooks });
+      filteredBooks => {
             (filteredBooks.error?this.setState({searchBooks: [] })
             :this.updateSearchBooksState(filteredBooks))
-            
-            //this.setState({searchBooks:filteredBooks});
-          
-          //
-          //console.log('inside not error')
-          //console.log(this.state.books);
-          //this.setState({searchBooks: prevState.searchBooks.map(sbook=>{BooksAPI.get(sbook.id).then(b=>{sbook.shelf=b.shelf});return sbook;})});
-          
-          }
+            }
       );
     }
     else
@@ -62,6 +46,7 @@ class BooksApp extends React.Component {
       this.setState({searchBooks: [] });
     }
   };
+
   updateSearchBooksState = (filteredBooks) => {
     const newBooks = filteredBooks.map((fb) => {
       
@@ -81,44 +66,18 @@ class BooksApp extends React.Component {
     });
   };
 
-  handleTextChange = (e) => {
-    console.log('app:handleTextChange:e.target.value',e.target.value);
-    //console.log(e.target.value.trim());
-    if(e.target.value!=='')
-        this.searching(e.target.value);
-    else
-    this.setState({searchBooks: []})
-
-    //console.log('App:handleTextChange: state.searchBooks');
-    console.log(this.state.searchBooks);
+handleTextChange = (e) => {
+  if(e.target.value!=='')
+      this.searching(e.target.value);
+  else
+  this.setState({searchBooks: []})
 };
 
   handleChangeShelf = (book, newShelf) => {
     BooksAPI.update(book,newShelf).then(response =>{
       book.shelf=newShelf;
       this.setState((prevState)=>({books: prevState.books.filter((oldbook)=>oldbook.id!==book.id).concat(book)}));
-      //this.setState((prevState)=>({searchBooks: prevState.searchBooks.filter((oldsearchbook)=>oldsearchbook.id!==book.id).concat(book)}));
-      // const newSearchBooks = this.state.searchBooks.map((sbook) => {
-      //   if (sbook.id === book.id) {
-      //       sbook.shelf = newShelf;
-          
-      //   }
-      //   return sbook;
-      // });
-    // this.setState((prevState) => ({
-    //   ...prevState,
-    //   books: book,
-    // }));
-    // this.setState({
-    //   searchBooks: newSearchBooks
-    // })});
   });
-  //   BooksAPI.getAll().then(
-  //     updatedbooks => {this.setState({books: updatedbooks});console.log(this.state.books);}
-  // );
-  //console.log('from handle changeshelf inside App');
-      // console.log(this.state.books);
-      // console.log(this.state.searchBooks);
   };
 
   emptySearchBooks = () => {
@@ -128,12 +87,12 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Routes>
-           <Route path='/' element={<Bookpage books={this.state.books} handleChangeShelf={this.handleChangeShelf}/>}/>
-           <Route path='/search' 
+        <Route path='/search' 
            element={<SearchBooks books={this.state.searchBooks} 
            handleChangeShelf={this.handleChangeShelf} 
            handleTextChange={this.handleTextChange} 
            handleCloseSearch={this.emptySearchBooks}/>}/>
+           <Route path='/' element={<Bookpage books={this.state.books} handleChangeShelf={this.handleChangeShelf}/>}/>
            <Route path='*' element={<NotFoundComponent />} />
         </Routes>
         

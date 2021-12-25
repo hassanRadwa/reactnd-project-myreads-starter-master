@@ -1,9 +1,7 @@
 import React, {Component} from 'react'
 import '../App.css'
 import {Link} from 'react-router-dom'
-import * as BooksAPI from '../BooksAPI'
 import BookItem from '../components/BookItem';
-import BookList from '../components/BookList'
 
 export default class SearchBooks extends Component {
     constructor(props) {
@@ -12,46 +10,16 @@ export default class SearchBooks extends Component {
           text: ''
         };
       }
-      handleChangeShelf = (book,newshelf) => {
-          console.log('searchbooks:handleChangeShelf:book',book);
-          this.props.handleChangeShelf(book,newshelf)
-      };
-    
-    //   handleTextChange = (e) => {
-        
-    //     // if(e.target.value!=='')
-    //     // this.setState({text: e.target.value})
-    //     // else
-    //     // this.setState({text: ''})
-    //     // this.props.handleTextChange(e);
-    //     // console.log('searchBooks: handleTextChange:props.books');
-    //     // console.log(this.props.books);
-    //     console.log('searchBooks:handleTextChange:e.target',e.target);
-    //     this.setState({text: e.target.value},()=>{
-    //         this.props.handleTextChange(e);
-    //     });
-    //   };
-
-      handleTextChange = (e) => {
-        this.setState({text: e.target.value},()=>{
-                    this.props.handleTextChange(e);
-                });
-      };
-
-    //   handleSubmit = (e) => {
-    //     //console.log('searchBooks:handleSubmit:e.target',e.target);
-    //     e.preventDefault();
-    //     this.props.handleTextChange(e);
-    //     this.setState({
-    //       ...this.state,
-    //       text: '',
-    //     });
-    //   };
-    
+    handleChangeShelf = (book,newshelf) => {
+        this.props.handleChangeShelf(book,newshelf)
+    };
+    handleTextChange = (e) => {
+      this.setState({text: e.target.value},()=>{
+                  this.props.handleTextChange(e);
+              });
+    };
     render() {
-       // {JSON.stringify(this.state.books)}
         return(
-            
         <div className="search-books">
             
             <div className="search-books-bar">
@@ -65,28 +33,20 @@ export default class SearchBooks extends Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-                {/* <form onSubmit={this.handleSubmit}> */}
-                    <input type="text" value={this.state.text} placeholder="Search by title or author" onChange={this.handleTextChange}/>
-                {/* </form> */}
+                <input type="text" value={this.state.text} placeholder="Search by title or author" onChange={this.handleTextChange}/>
               </div>
             </div>
             <div className="search-books-results">
-            {/* {JSON.stringify(this.state.books)} */}
               <ol className="books-grid">
               {typeof this.props.books !== 'undefined' && this.props.books?
-              
               this.props.books.map((book)=>
                                     <BookItem 
                                     book={book} 
                                     key={book.id}
-                                    handleChangeShelf={this.handleChangeShelf} />):<div></div>
-                                    }
+                                    handleChangeShelf={this.handleChangeShelf} />)
+                :<div></div>
+                }
               </ol>
-              {/* {typeof this.state.books !== 'undefined' && this.state.text.trim()!=='' && this.state.books?
-              <BookList 
-              books={this.state.books} 
-              handleChangeShelf= {this.handleChangeShelf}/>
-              :<div>No books found</div>} */}
             </div>
           </div>
         )

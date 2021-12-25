@@ -5,11 +5,6 @@ import {Link} from 'react-router-dom'
 
 
 export default class BookPage extends Component {
-    
-      
-    
-      
-    
     render() {
         return(
             <div>
@@ -26,8 +21,6 @@ export default class BookPage extends Component {
               <Link to='/search'><button></button></Link>
               </div>
             </div>
-
-              
         )
     }
 }

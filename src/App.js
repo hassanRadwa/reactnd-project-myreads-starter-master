@@ -18,6 +18,7 @@ class BooksApp extends React.Component {
   }
 
   componentDidMount() {
+    //get MyReads books from BooksAPI and updating books state
     BooksAPI.getAll().then(
         (books) => {
           this.setState({books});
@@ -25,12 +26,11 @@ class BooksApp extends React.Component {
     );
     
   }
-  getBookshelfBybookid=(bookid) => {
-    BooksAPI.get(bookid).then((b)=>{
-      return JSON.stringify(b.shelf);
-    })
-  };
 
+  //get filtered books according the input text in input value
+  //if no books returned the searchBooks state will be updated with empty array
+  //otherwise the searchBooks state will be updated with the returned books with shelf value
+  //if input text is empty the searchBooks state will be updated with empty array.
   searching = (searchtxt)=>{
     if(searchtxt!=='')
     {
@@ -47,6 +47,8 @@ class BooksApp extends React.Component {
     }
   };
 
+  //updates the searchBooks state with a new given array of books
+  //it adds the current shelf value to each item
   updateSearchBooksState = (filteredBooks) => {
     const newBooks = filteredBooks.map((fb) => {
       
@@ -66,6 +68,7 @@ class BooksApp extends React.Component {
     });
   };
 
+// handels the text change of input field
 handleTextChange = (e) => {
   if(e.target.value!=='')
       this.searching(e.target.value);
@@ -80,6 +83,7 @@ handleTextChange = (e) => {
   });
   };
 
+  //sets the searchBooks state to empty array to reset the search page 
   emptySearchBooks = () => {
     this.setState({searchBooks: []});
   };

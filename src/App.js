@@ -17,29 +17,23 @@ class BooksApp extends React.Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     //get MyReads books from BooksAPI and updating books state
-    BooksAPI.getAll().then(
-        (books) => {
-          this.setState({books});
-      }
-    );
-    
+    const books = await BooksAPI.getAll();
+    this.setState({books});
   }
 
   //get filtered books according the input text in input value
   //if no books returned the searchBooks state will be updated with empty array
   //otherwise the searchBooks state will be updated with the returned books with shelf value
   //if input text is empty the searchBooks state will be updated with empty array.
-  searching = (searchtxt)=>{
+  async searching (searchtxt){
     if(searchtxt!=='')
     {
-    BooksAPI.search(searchtxt).then(
-      filteredBooks => {
-            (filteredBooks.error?this.setState({searchBooks: [] })
-            :this.updateSearchBooksState(filteredBooks))
-            }
-      );
+    const filteredBooks= await BooksAPI.search(searchtxt);
+    filteredBooks.error?
+    this.setState({searchBooks: [] }):
+    this.updateSearchBooksState(filteredBooks);
     }
     else
     {

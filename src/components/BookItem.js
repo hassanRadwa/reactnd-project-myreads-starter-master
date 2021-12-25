@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../App.css';
 import SelectComponent from './SelectComponent';
 import BookShelf from '../components/BookShelf';
-import * as BooksAPI from '../BooksAPI'
+
 
 export default class BookItem extends Component {
     
@@ -32,6 +32,7 @@ export default class BookItem extends Component {
                     </div>
                     <div className="book-shelf-changer">
                     <SelectComponent 
+                        key={id}
                         book={id} 
                         handleChange= {this.onChangeShelf}
                         shelfValue={shelf}

@@ -8,15 +8,15 @@ export default class BookList extends Component {
     return (
         <div className="list-books-content">
             <div>
-                {Object.entries(BookShelf).map(([key,value])=>
+                {Object.entries(BookShelf).map(([key1,value1])=>
                 {
-                    if(key!=='none')
+                    if(key1!=='none')
                         return(
-                          <div className="bookshelf">
-                              <h2 className="bookshelf-title">{value}</h2>
+                          <div className="bookshelf" key={key1}>
+                              <h2 className="bookshelf-title">{value1}</h2>
                               <div className="bookshelf-books">
-                                  <ol className="books-grid" key={key}>
-                                      {this.props.books.filter((b)=>b.shelf === key)
+                                  <ol className="books-grid" key={key1}>
+                                      {this.props.books.filter((b)=>b.shelf === key1)
                                       .map((book)=>
                                       <BookItem 
                                       book={book} 
@@ -27,7 +27,9 @@ export default class BookList extends Component {
                               </div>
                           </div>
                         );
-                            })}
+                    else
+                      return (<div key='none'></div>);
+                })}
             </div>
         </div>
       );

@@ -6,6 +6,7 @@ import SearchBooks from './pages/searchBooks';
 import { Routes } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import NotFoundComponent from './components/NotFoundComponent';
+import {debounce} from 'lodash';
 
 
 class BooksApp extends React.Component {
@@ -63,12 +64,12 @@ class BooksApp extends React.Component {
   };
 
 // handels the text change of input field
-handleTextChange = (e) => {
+handleTextChange = debounce((e) => {
   if(e.target.value!=='')
       this.searching(e.target.value);
   else
   this.setState({searchBooks: []})
-};
+},200);
 
   handleChangeShelf = (book, newShelf) => {
     BooksAPI.update(book,newShelf).then(response =>{
